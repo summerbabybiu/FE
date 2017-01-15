@@ -1,46 +1,35 @@
 <template>
   <div id="app">
-    <h1>站点测试中</h1>
-    <div v-for="post in posts">
-      <h2>{{post.title}}</h2>
-      <p>{{post.summary}}</p>
-      <pre v-html="post.content"></pre>
-    </div>
-    <p>第 {{page}}页，共 {{total_page}}页 {{total_posts}}篇文章</p>
+  <md-toolbar>
+    <md-avatar class="md-small">
+      <img src="https://ws3.sinaimg.cn/large/8696f529gw1fbri8jchqvj20dc0cjwf9.jpg" alt="People">
+    </md-avatar>
+    <h2 class="md-title" style="flex: 1">&nbsp{{title}}</h2>
+  </md-toolbar>
+    <router-view v-on:loadError="openSnack"></router-view>
+    <!--提示框-->
+    <md-snackbar :md-position="'top' + ' ' + 'right'" ref="snackbar" :md-duration="2000">
+      <span>{{snackbarMessage}}</span>
+    <md-button class="md-accent" md-theme="blue" @click="$refs.snackbar.close()">知道了</md-button>
+  </md-snackbar>
   </div>
 </template>
 
 <script>
-import apiConfig from './apiconfig'
+// import postview from './components/Postview'
 
 export default {
   name: 'app',
   data: function () {
     return {
-      page: 1,
-      total_page: 0,
-      total_posts: 0,
-      posts: [],
-      load_failed: false
+      title: '站点建设中',
+      snackbarMessage: ''
     }
   },
-  created: function () {
-    this.getPage(this.page)
-  },
   methods: {
-    getPage: function (page) {
-      this.$http.get(`${apiConfig.apiUrl()}post/list?page=${page}`)
-      .then(response => {
-        var body = response.body
-        this.total_posts = body.total_post
-        this.total_page = body.total_page
-        this.page = body.page
-        this.posts = body.posts
-        console.log(response)
-      })
-      .catch(e => {
-        this.load_failed = true
-      })
+    openSnack: function () {
+      this.snackbarMessage = '载入失败'
+      this.$refs.snackbar.open()
     }
   }
 }
@@ -52,8 +41,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

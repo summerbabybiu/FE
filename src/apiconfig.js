@@ -1,6 +1,6 @@
 module.exports = {
-  env: 'dev',
-  _apiBaseUrl: '/',
+  env: 'prod',
+  _apiBaseUrl: '/api/',
   _apiBaseUrlDev: 'http://localhost:3000/api/',
   apiUrl: function () {
     if (this.env === 'dev') {
