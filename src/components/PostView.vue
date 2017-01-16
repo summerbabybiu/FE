@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import apiconfig from '../apiconfig'
 export default {
   name: 'postview',
   data: function () {
@@ -27,7 +26,7 @@ export default {
   },
   methods: {
     getPost: function (postid) {
-      this.$http.get(`${apiconfig.apiUrl()}post/${postid}`)
+      this.$http.get(`/api/post/${postid}`)
       .then(response => {
         this.post = response.body
         console.log(response.body)

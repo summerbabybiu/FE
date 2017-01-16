@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import apiConfig from '../apiconfig'
 export default {
   name: 'postlist',
   data: function () {
@@ -30,7 +29,7 @@ export default {
   },
   methods: {
     getPage: function (page) {
-      this.$http.get(`${apiConfig.apiUrl()}post/list?page=${page}`)
+      this.$http.get(`/api/post/list?page=${page}`)
       .then(response => {
         var body = response.body
         this.total_posts = body.total_post
