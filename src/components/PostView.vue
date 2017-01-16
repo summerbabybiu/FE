@@ -29,7 +29,6 @@ export default {
       this.$http.get(`/api/post/${postid}`)
       .then(response => {
         this.post = response.body
-        console.log(response.body)
       })
       .catch(e => {
         this.emmitError()
